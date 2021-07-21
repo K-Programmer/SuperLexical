@@ -5,19 +5,90 @@
  */
 package view;
 
+import Controller.Condicoes;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Token;
+
 /**
  *
  * @author KLabs
  */
 public class Compiler extends javax.swing.JFrame {
 
+    
+   
+    
+    Condicoes c=new Condicoes();
     /**
      * Creates new form Compiler
      */
     public Compiler() {
         initComponents();
+        init();
     }
 
+    
+    
+    public void init(){
+       
+         
+    }
+    public void readJTable( ArrayList<Token> tokens){
+    DefaultTableModel modelo=(DefaultTableModel) TabelaTokens.getModel();   
+    
+     
+     
+     
+     modelo.setNumRows(0);
+     for(Token t:tokens){
+         
+      modelo.addRow(new Object[]{
+          
+          t.getLex(),
+          t.getClasse(),
+          t.getLinha()
+      });
+         
+     }
+    }
+    
+     public String validar(String lexema){
+        return c.validar(lexema);
+    }
+    
+    public ArrayList<Token> lista(){
+        ArrayList<Token> tokens=new ArrayList<>();
+        
+       String texto=campo.getText();
+       int posicao=0;
+      
+       if(texto.length()>0){
+       String[] textosplit;
+          textosplit = texto.split("\n");
+          
+        
+         for(int i=0; i<textosplit.length;i++){
+             String textoposix=textosplit[i];
+             String [] lista=textoposix.split(" ");
+             
+                 for(int k=0;k<lista.length;k++){
+                     posicao=posicao+lista[k].length()+1;
+                     Token token=new Token(validar(lista[k]), lista[k],i+1,posicao);
+                     tokens.add(token);
+                    
+                 
+             }
+         }
+    }
+       
+       
+       return tokens;
+       
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,7 +101,7 @@ public class Compiler extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        consola = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -39,7 +110,9 @@ public class Compiler extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TabelaTokens = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        campo = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -51,13 +124,15 @@ public class Compiler extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(47, 22, 57));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextArea1.setBackground(new java.awt.Color(47, 22, 57));
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Erro na linha 1.");
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Output console", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(204, 204, 204))); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
+        consola.setEditable(false);
+        consola.setBackground(new java.awt.Color(47, 22, 57));
+        consola.setColumns(20);
+        consola.setForeground(new java.awt.Color(255, 255, 255));
+        consola.setRows(5);
+        consola.setText("Erro na linha 1.");
+        consola.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Output console", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(204, 204, 204))); // NOI18N
+        consola.setPreferredSize(new java.awt.Dimension(180, 113));
+        jScrollPane1.setViewportView(consola);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 140));
 
@@ -71,21 +146,31 @@ public class Compiler extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 100, 320, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 90, 320, -1));
 
         jButton2.setBackground(new java.awt.Color(136, 80, 152));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_lightning_bolt_26px.png"))); // NOI18N
         jButton2.setText("Run");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 20, 320, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 10, 320, -1));
 
         jButton3.setBackground(new java.awt.Color(136, 80, 152));
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_gas_industry_26px.png"))); // NOI18N
         jButton3.setText("Erase");
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 60, 320, -1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 50, 320, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 1200, 140));
 
@@ -104,43 +189,70 @@ public class Compiler extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1200, 40));
 
-        jTable1.setBackground(new java.awt.Color(51, 0, 51));
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaTokens.setBackground(new java.awt.Color(51, 0, 51));
+        TabelaTokens.setForeground(new java.awt.Color(255, 255, 255));
+        TabelaTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Token", "Lexema"
+                "Token", "Lexema", "Linha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane2.setViewportView(TabelaTokens);
+        if (TabelaTokens.getColumnModel().getColumnCount() > 0) {
+            TabelaTokens.getColumnModel().getColumn(0).setResizable(false);
+            TabelaTokens.getColumnModel().getColumn(1).setResizable(false);
+            TabelaTokens.getColumnModel().getColumn(2).setResizable(false);
         }
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(802, 40, 400, 420));
 
+        campo.setColumns(20);
+        campo.setRows(5);
+        jScrollPane3.setViewportView(campo);
+
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 800, 420));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       campo.setText("");
+        readJTable(lista());
+              
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (!campo.getText().isEmpty()){
+             
+              readJTable(lista());
+              
+             
+              
+     } else{
+        JOptionPane.showMessageDialog(null, "Por favor introduza algum texto!!","ACESSO NEGADO",JOptionPane.ERROR_MESSAGE);
+     }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,6 +290,9 @@ public class Compiler extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelaTokens;
+    private javax.swing.JTextArea campo;
+    private javax.swing.JTextArea consola;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -189,7 +304,6 @@ public class Compiler extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration//GEN-END:variables
 }

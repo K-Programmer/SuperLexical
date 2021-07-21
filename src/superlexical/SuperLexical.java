@@ -5,6 +5,7 @@
  */
 
 package superlexical;
+import Controller.Condicoes;
 import view.Compiler;
 
 /**
@@ -17,6 +18,8 @@ public class SuperLexical {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        //System.out.print(Condicoes.numero("L"));
       Compiler c=new Compiler();
       c.setVisible(true);
     }
