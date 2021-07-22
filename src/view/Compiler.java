@@ -239,7 +239,7 @@ public class Compiler extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Token", "Lexema", "Linha"
+                "Lexema", "Classe", "Linha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
