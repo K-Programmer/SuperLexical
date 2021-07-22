@@ -61,19 +61,20 @@ public class Compiler extends javax.swing.JFrame {
         ArrayList<Token> tokens = new ArrayList<>();
         String erro = "";
         String texto = campo.getText();
+        
+        
         int posicao = 0;
 
         if (texto.length() > 0) {
-            String[] textosplit;
-            textosplit = texto.split("\n");
+            String[] textosplit= texto.split("\n"); // divide cada linha e poe no array
 
             for (int i = 0; i < textosplit.length; i++) {
-                String textoposix = textosplit[i];
-                String[] lista = textoposix.split(" ");
+                String textoLinha = textosplit[i]; //pega uma linha
+                String[] lista = textoLinha.split(" "); // divide cada palavra na linha , separado por espaco e guarda no array
 
                 for (int k = 0; k < lista.length; k++) {
-                    posicao = posicao + lista[k].length() + 1;
-                    Token token = new Token(validar(lista[k]), lista[k], i + 1, posicao);
+                   
+                    Token token = new Token(Condicoes.validar(lista[k]), lista[k], i + 1);
 
                     if (!token.getLex().isEmpty()) {
                         tokens.add(token);

@@ -19,6 +19,14 @@ public class Token {
         
     }
     
+     public Token(String classe, String lex, int linha){
+         this.lex=lex;
+         this.classe=classe;
+         this.linha=linha;
+  
+            
+    }
+    
      public Token(String classe, String lex, int linha,int pos){
          this.lex=lex;
          this.classe=classe;
