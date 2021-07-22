@@ -7,6 +7,7 @@ package Controller;
 
 import java.util.Arrays;
 import java.util.List;
+import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
@@ -26,8 +27,11 @@ public class Condicoes {
 "p q r s t u v w x y z A B C \n" +
 "D E F G H I J K L M N O P \n" +
 "Q R S T W V W X Y Z ";
+   
       public static boolean numero(String str){
-      boolean flag=true;
+      
+          boolean flag=true;
+    
       for(int i=0;i<str.length();i++){
           if(!(numeros.contains(str.valueOf(str.charAt(i))))){
               flag=false;
@@ -73,22 +77,33 @@ public class Condicoes {
  
  
  
-      public static String validar(String str1){
-     String str="";
-     if(str1.endsWith(" "))
-         str=str1.substring(0, str1.length()-1);
-     else
-         str=str1;
-    if(simbolo(str))
-         return "Simbolo especial";
-    else
-       if(numero(str))
-        return "Digito";
-       else
-        if(identificador(str))
-          return "Identificador";
-        else
-            return "Indefinido";
+      public static String validar(String str){
+  String classe="Indefinido";
+          if(str.isEmpty()){
+              
+              
+             return "";
+          }
+        
+          
+    if(simbolo(str)){
+      classe= "Simbolo especial";  
+      return classe;
+    }
+        
+    
+       if(numero(str)){
+        classe= "Digito";
+        return classe;
+        
+       }
+      
+        if(identificador(str)){
+          classe="Identificador";
+          return classe;
+        }
+        
+           return classe;
  }
       
 

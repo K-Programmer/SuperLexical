@@ -6,9 +6,16 @@
 package view;
 
 import Controller.Condicoes;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
+import javax.swing.text.Highlighter.HighlightPainter;
 import model.Token;
 
 /**
@@ -60,7 +67,7 @@ public class Compiler extends javax.swing.JFrame {
     
     public ArrayList<Token> lista(){
         ArrayList<Token> tokens=new ArrayList<>();
-        
+        String erro="";
        String texto=campo.getText();
        int posicao=0;
       
@@ -76,7 +83,34 @@ public class Compiler extends javax.swing.JFrame {
                  for(int k=0;k<lista.length;k++){
                      posicao=posicao+lista[k].length()+1;
                      Token token=new Token(validar(lista[k]), lista[k],i+1,posicao);
-                     tokens.add(token);
+                     
+                     if(!token.getLex().isEmpty()){
+                        tokens.add(token);
+                        
+                        if(token.getClasse().equalsIgnoreCase("Indefinido")){
+                            Highlighter highlighter = campo.getHighlighter();
+      HighlightPainter painter = 
+             new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
+      int p0 = campo.getText().indexOf(token.getLex());
+      int p1 = p0 + token.getLex().length();
+                            try {
+                                highlighter.addHighlight(p0, p1, painter );
+                            } catch (BadLocationException ex) {
+                                Logger.getLogger(Compiler.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            if(consola.getText().isEmpty()){
+                                
+                             erro=token.getClasse() +"  Linha: "+String.valueOf(token.getLinha());
+                             
+                             consola.setText(erro);   
+                            }else{
+                              erro=erro+"\n"+token.getClasse() +"  Linha: "+String.valueOf(token.getLinha()); 
+                               consola.setText(erro);
+                            }
+                            
+                        }
+                     }
+                   
                     
                  
              }
@@ -129,7 +163,6 @@ public class Compiler extends javax.swing.JFrame {
         consola.setColumns(20);
         consola.setForeground(new java.awt.Color(255, 255, 255));
         consola.setRows(5);
-        consola.setText("Erro na linha 1.");
         consola.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Output console", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(204, 204, 204))); // NOI18N
         consola.setPreferredSize(new java.awt.Dimension(180, 113));
         jScrollPane1.setViewportView(consola);

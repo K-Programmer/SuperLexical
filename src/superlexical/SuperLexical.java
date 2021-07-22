@@ -18,8 +18,14 @@ public class SuperLexical {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        //System.out.print(Condicoes.numero("L"));
+       
+//        String str1="wewewewew ";
+//        String str="";
+//     if(str1.endsWith(" "))
+//         str=str1.substring(0, str1.length()-1);
+//     else
+//         str=str1;
+//        System.out.print(str);
       Compiler c=new Compiler();
       c.setVisible(true);
     }
