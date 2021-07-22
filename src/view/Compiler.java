@@ -53,9 +53,7 @@ public class Compiler extends javax.swing.JFrame {
         }
     }
 
-    public String validar(String lexema) {
-        return c.validar(lexema);
-    }
+   
 
     public ArrayList<Token> lista() {
         ArrayList<Token> tokens = new ArrayList<>();
@@ -82,6 +80,7 @@ public class Compiler extends javax.swing.JFrame {
                         if (token.getClasse().equalsIgnoreCase("Indefinido")) {
                             Highlighter highlighter = campo.getHighlighter();
 
+                            //pinta erro
                             HighlightPainter painter  = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
                             int p0 = campo.getText().indexOf(token.getLex());
                             int p1 = p0 + token.getLex().length();
