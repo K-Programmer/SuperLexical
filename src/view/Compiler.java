@@ -24,10 +24,8 @@ import model.Token;
  */
 public class Compiler extends javax.swing.JFrame {
 
-    
-   
-    
-    Condicoes c=new Condicoes();
+    Condicoes c = new Condicoes();
+
     /**
      * Creates new form Compiler
      */
@@ -36,93 +34,85 @@ public class Compiler extends javax.swing.JFrame {
         init();
     }
 
-    
-    
-    public void init(){
-       
-         
+    public void init() {
+
     }
-    public void readJTable( ArrayList<Token> tokens){
-    DefaultTableModel modelo=(DefaultTableModel) TabelaTokens.getModel();   
-    
-     
-     
-     
-     modelo.setNumRows(0);
-     for(Token t:tokens){
-         
-      modelo.addRow(new Object[]{
-          
-          t.getLex(),
-          t.getClasse(),
-          t.getLinha()
-      });
-         
-     }
+
+    public void readJTable(ArrayList<Token> tokens) {
+        DefaultTableModel modelo = (DefaultTableModel) TabelaTokens.getModel();
+
+        modelo.setNumRows(0);
+        for (Token t : tokens) {
+
+            modelo.addRow(new Object[]{
+                t.getLex(),
+                t.getClasse(),
+                t.getLinha()
+            });
+
+        }
     }
-    
-     public String validar(String lexema){
+
+    public String validar(String lexema) {
         return c.validar(lexema);
     }
-    
-    public ArrayList<Token> lista(){
-        ArrayList<Token> tokens=new ArrayList<>();
-        String erro="";
-       String texto=campo.getText();
-       int posicao=0;
-      
-       if(texto.length()>0){
-       String[] textosplit;
-          textosplit = texto.split("\n");
-          
-        
-         for(int i=0; i<textosplit.length;i++){
-             String textoposix=textosplit[i];
-             String [] lista=textoposix.split(" ");
-             
-                 for(int k=0;k<lista.length;k++){
-                     posicao=posicao+lista[k].length()+1;
-                     Token token=new Token(validar(lista[k]), lista[k],i+1,posicao);
-                     
-                     if(!token.getLex().isEmpty()){
+
+    public ArrayList<Token> lista() {
+        ArrayList<Token> tokens = new ArrayList<>();
+        String erro = "";
+        String texto = campo.getText();
+        int posicao = 0;
+
+        if (texto.length() > 0) {
+            String[] textosplit;
+            textosplit = texto.split("\n");
+
+            for (int i = 0; i < textosplit.length; i++) {
+                String textoposix = textosplit[i];
+                String[] lista = textoposix.split(" ");
+
+                for (int k = 0; k < lista.length; k++) {
+                    posicao = posicao + lista[k].length() + 1;
+                    Token token = new Token(validar(lista[k]), lista[k], i + 1, posicao);
+
+                    if (!token.getLex().isEmpty()) {
                         tokens.add(token);
-                        
-                        if(token.getClasse().equalsIgnoreCase("Indefinido")){
+
+                        if (token.getClasse().equalsIgnoreCase("Indefinido")) {
                             Highlighter highlighter = campo.getHighlighter();
-      HighlightPainter painter = 
-             new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
-      int p0 = campo.getText().indexOf(token.getLex());
-      int p1 = p0 + token.getLex().length();
+
+                            HighlightPainter painter  = new DefaultHighlighter.DefaultHighlightPainter(Color.pink);
+                            int p0 = campo.getText().indexOf(token.getLex());
+                            int p1 = p0 + token.getLex().length();
                             try {
-                                highlighter.addHighlight(p0, p1, painter );
+                                highlighter.addHighlight(p0, p1, painter);
                             } catch (BadLocationException ex) {
                                 Logger.getLogger(Compiler.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            if(consola.getText().isEmpty()){
-                                
-                             erro=token.getClasse() +"  Linha: "+String.valueOf(token.getLinha());
-                             
-                             consola.setText(erro);   
-                            }else{
-                              erro=erro+"\n"+token.getClasse() +"  Linha: "+String.valueOf(token.getLinha()); 
-                               consola.setText(erro);
-                            }
+
                             
+                            
+                            if (consola.getText().isEmpty()) {
+
+                                erro = token.getClasse() + "  Linha: " + String.valueOf(token.getLinha());
+
+                                consola.setText(erro);
+                            } else {
+                                erro = erro + "\n" + token.getClasse() + "  Linha: " + String.valueOf(token.getLinha());
+                                consola.setText(erro);
+                            }
+
                         }
-                     }
-                   
-                    
-                 
-             }
-         }
+                    }
+
+                }
+            }
+        }
+
+        return tokens;
+
     }
-       
-       
-       return tokens;
-       
-    }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -276,26 +266,24 @@ public class Compiler extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       campo.setText("");
+        campo.setText("");
         readJTable(lista());
-              
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (!campo.getText().isEmpty()){
-             
-              readJTable(lista());
-              
-             
-              
-     } else{
-        JOptionPane.showMessageDialog(null, "Por favor introduza algum texto!!","ACESSO NEGADO",JOptionPane.ERROR_MESSAGE);
-     }
+        if (!campo.getText().isEmpty()) {
+
+            readJTable(lista());
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Campo vazio!!", "!!!!!!!!!!", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     /**

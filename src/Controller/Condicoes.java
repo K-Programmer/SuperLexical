@@ -17,65 +17,59 @@ public class Condicoes {
     
     static String numeros ="1234567890";
     
-   
-   static String preservada="div or and not if then else of Record \n" +
-                "while do begin end read write var array function |\n" +
-                "procedure program true false char integer boolean Uses";
-  static List<String>reservada =Arrays.asList("div","or", "and", "not","if", "then", "else", "of","Record","while","do"," begin", "end", "read", "write", "var", "array", "function", "procedure", "program", "true", "false", "char", "integer", "boolean","Uses","+","­","*","=","<",">","(",")","[","]",":",".",",",";",":");
+
+   static List<String>reservada =Arrays.asList("div","or", "and", "not","if", "then", "else",
+          "of","while","do"," begin", "end", "read", "write", "var", "array", "function",
+          "procedure", "program", "true", "false", "char", "integer", "boolean",
+          "+","­","*","=","<",">","<=",">=","(",")","[","]",":",".","..",",",";",":",":=","<>");
     
    static String letras="a b c d e f g h i j k l m n o \n" +
-"p q r s t u v w x y z A B C \n" +
-"D E F G H I J K L M N O P \n" +
-"Q R S T W V W X Y Z ";
+                        "p q r s t u v w x y z A B C \n" +
+                        "D E F G H I J K L M N O P \n" +
+                        "Q R S T W V W X Y Z ";
    
       public static boolean numero(String str){
       
-          boolean flag=true;
+          boolean result=true;
     
       for(int i=0;i<str.length();i++){
           if(!(numeros.contains(str.valueOf(str.charAt(i))))){
-              flag=false;
+              result=false;
               break;
           }
       }
            
-      return flag;
+      return result;
   }
        private  static boolean simbolo(String str) {
-      boolean flag=false;
+      boolean result=false;
       for(int i=0;i<reservada.size()-1;i++){
           if(reservada.get(i).equalsIgnoreCase(str)){
-           flag=true;
+           result=true;
           break;
           }
       }
-     return flag;
+     return result;
     }
 
   
  
- /**
-  * Metodo que verifica se uma String(identificador) e ou nao um identificador
-  * se for retorna true
-  * caso contrario retorna false
-  * @param identificador
-  * @return boolean
-  */
- static boolean identificador(String identificador){
-     boolean flag=true;
+//Metodo que verifica se e' identificador
+ public static boolean identificador(String identificador){
+     boolean result=true;
      if((letras.contains(identificador.substring(0, 1)))){// so entra no ciclo se o primeiro caracter for uma letra
          for(int i=1;i<=identificador.length()-1;i++){
             if( (letras.contains(identificador.charAt(i)+""))){
-                flag=true;
+                result=true;
             
          }
      }
      }else
-         flag=false;
-     return flag;
+         result=false;
+     return result;
  }
  
- 
+ //Metodo que verifica retorna
  
       public static String validar(String str){
   String classe="Indefinido";
