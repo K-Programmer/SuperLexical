@@ -1,5 +1,5 @@
 # SuperLexical
- LPC Trabalho semestral
+ LPC - Projecto Semestral
  
  
  Feito por:
