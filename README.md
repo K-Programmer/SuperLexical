@@ -3,8 +3,8 @@
  
  
  Feito por:
- Alzira Francisco Xerinda
- Edmilson Kayce Mumuane Novele
+ Alzira Francisco Xerinda,
+ Edmilson Kayce Mumuane Novele,
  Zefanias Rodrigues Tembe
  
  
