@@ -8,6 +8,8 @@ package view;
 import Controller.Condicoes;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -59,7 +61,8 @@ public class Compiler extends javax.swing.JFrame {
         ArrayList<Token> tokens = new ArrayList<>();
         String erro = "";
         String texto = campo.getText();
-        
+        List<String> s= Arrays.asList("+", "­", "*", "=", "<", ">", "<=", ">=", "(", ")", "[", "]", ":", ".", "..", ",", ";", ":", ":=", "<>");
+
         
         int posicao = 0;
 
@@ -69,7 +72,37 @@ public class Compiler extends javax.swing.JFrame {
             for (int i = 0; i < textosplit.length; i++) {
                 String textoLinha = textosplit[i]; //pega uma linha
                 String[] lista = textoLinha.split(" "); // divide cada palavra na linha , separado por espaco e guarda no array
+               String total="";
+                String now2="";
+                
+                for (int j = 0; j < lista.length; j++) {
+                    String now=lista[j];
+                   
+                    String nowArray[]=now.split("");
+                    
+                    for (int z = 0; z < nowArray.length; z++) {
+                     
 
+                        for (int y = 0; y < s.size(); y++) {
+                            if(nowArray[z].equalsIgnoreCase(s.get(y))){
+                                nowArray[z]=" " +nowArray[z]+" ";
+                                
+                            }
+                            
+                        }
+                       
+                        now2+=nowArray[z];
+                    }
+                    
+                 System.err.println(now2);
+                 
+                 total+=now2;
+               
+                }
+                
+                lista = now2.split(" "); 
+                
+                
                 for (int k = 0; k < lista.length; k++) {
                    
                     Token token = new Token(Condicoes.validar(lista[k]), lista[k], i + 1);
@@ -229,7 +262,7 @@ public class Compiler extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "Lexema", "Classe", "Linha"
+                "Token", "Lexema/Classe", "Linha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -267,6 +300,7 @@ public class Compiler extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         campo.setText("");
+        consola.setText("");
         readJTable(lista());
 
     }//GEN-LAST:event_jButton3ActionPerformed

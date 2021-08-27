@@ -22,11 +22,13 @@ public class Condicoes {
             "procedure", "program", "true", "false", "char", "integer", "boolean",
             "+", "­", "*", "=", "<", ">", "<=", ">=", "(", ")", "[", "]", ":", ".", "..", ",", ";", ":", ":=", "<>");
 
-    static String letras = "abdefghijklmno\n"
+    static String letras = "abcdefghijklmno\n"
             + "pqrstuvwxyzABC\n"
             + "DEFGHIJKLMNOP\n"
             + "QRSTWVWXYZ";
 
+    
+  
     //Metodo que verifica se e'  digito
     public static boolean numero(String str) {
 
@@ -84,7 +86,7 @@ public class Condicoes {
         }
 
         if (numero(str)) {
-            classe = "Digito";
+            classe = "Numero";
             return classe;
 
         }
